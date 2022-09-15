@@ -6,7 +6,7 @@ export default class Book extends Component {
       <div>
         <h1>
           Books
-          {this.props.book} 
+          {this.props.name} 
         </h1>
         <button type="submit">Remove</button>
       </div>

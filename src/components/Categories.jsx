@@ -4,7 +4,7 @@ export default class Categories extends Component {
   render() {
     return (
       <div>
-        <h1>Catagory</h1>
+        <button type="submit">Check status</button>
       </div>
     );
   }
