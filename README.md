@@ -19,6 +19,11 @@ This is a simple Bookstore web app made with react
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+git clone ....... [book-store](https://github.com/Ashe546/bookstore-react)
+cd projectDirectory
+npm i
+npm start
+
 ## Available Scripts
 
 In the project directory, you can run:

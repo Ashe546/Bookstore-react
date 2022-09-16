@@ -7,7 +7,7 @@ export default class Nav extends Component {
       <div>
         <nav>
           <Link to="/">Home</Link>
-          <Link to="/catagories">Calculator</Link>
+          <Link to="/catagories">Catagories</Link>
           <Link to="/add">Add books</Link>
         </nav>
       </div>
