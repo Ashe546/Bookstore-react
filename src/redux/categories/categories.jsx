@@ -1,19 +1,17 @@
 /* eslint-disable */
-const STATUS = 'STATUS';
+const CHECK_STATUS = 'CHECK_STATUS';
 
-let initCatagory = [];
+const catagoriesReducer = (state = [], action) => {
+  switch (action.type) {
+    case CHECK_STATUS:
+      return 'UNDER CONSTRUCTION';
+    default:
+      return state;
+  }
+};
 
-const catagoryReducer = (state = initCatagory, action) => {
-    if(action.type === STATUS) {
-        return 'Under Construction'
-    } else {
-        return state
-    }
-}
-
-const statusAction = ({
-  type: STATUS,
+export const checkStatus = () => ({
+  type: CHECK_STATUS,
 });
 
-export default catagoryReducer;
-export {statusAction};
+export default catagoriesReducer;

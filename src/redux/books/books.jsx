@@ -2,38 +2,45 @@
 const ADD_BOOK = 'ADDBOOK';
 const REMOVE_BOOK = 'REMOVEBOOK';
 
-let initialBooks = []
+let initialBooks = [
+    {
+        id: '1',
+        title: 'In Search of Lost Time ',
+        author: 'Marcel Proust',
+      },
+      {
+        id: '2',
+        title: 'Harry Potter',
+        author: 'J.K. Rowling',
+      },
+      {
+        id: '3',
+        title: 'The Adventures of Huckleberry Finn',
+        author: 'Mark Twain',
+      },
+]
 
 const bookReduser = (state = initialBooks, action) => {
   switch(action.type) {
     case ADD_BOOK:
         return [
-            ...state,
-            {
-                id: action.book.id,
-                title: action.book.title,
-                author: action.book.author,
-            },
+            ...state, action.payload,
         ];
     case REMOVE_BOOK:
-        return state.filter((book) => book.id !== action.id);
+        return state.filter((book) => book.id !== action.payload);
     default:
         return state;  
   } 
 }
 
-const addAction = (id, title, author) => ({
+const addAction = (newBook) => ({
   type: ADD_BOOK,
-  book: {
-    id,
-    title,
-    author, 
-    }
+  payload: newBook
 });
 
 const revAction = (id) => ({
   type: REMOVE_BOOK,
-  id
+  payload: id
 });
 
 export default bookReduser;
