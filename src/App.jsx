@@ -7,13 +7,12 @@ import Addbook from './components/Addbook';
 import './App.css';
 
 function App() {
-  const[books] = useState([{name :"God of war", auter: "I dont know"}, {name :"Harry poter", auter: "I dont know too"}])
   return (
     <div className="App">
       <Nav />
       <Routes>
         <Route path="/" element={
-        <Book books={books} />
+        <Book />
         } />
         <Route path="/catagories" element={<Categories />} />
         <Route path="/add" element={<Addbook />} />

@@ -1,11 +1,25 @@
-import React, { Component } from 'react';
+/* eslint-disable */
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { checkStatus } from '../redux/categories/categories'
 
-export default class Categories extends Component {
-  render() {
-    return (
-      <div>
-        <button type="submit">Check status</button>
-      </div>
-    );
-  }
-}
+const Catagories = () => {
+  
+  const status = useSelector((state) => state.catagories);
+
+  const dispatch = useDispatch();
+
+  return (
+    <div>
+      <button
+        type="button"
+        onClick={() => dispatch(checkStatus())}
+      >
+        Check status
+      </button>
+      <h3>{status}</h3>
+    </div>
+  );
+};
+
+export default Catagories;
