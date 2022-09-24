@@ -1,47 +1,75 @@
-/* eslint-disable */
-const ADD_BOOK = 'ADDBOOK';
-const REMOVE_BOOK = 'REMOVEBOOK';
+import axios from 'axios';
 
-let initialBooks = [
-    {
-        id: '1',
-        title: 'In Search of Lost Time ',
-        author: 'Marcel Proust',
-      },
-      {
-        id: '2',
-        title: 'Harry Potter',
-        author: 'J.K. Rowling',
-      },
-      {
-        id: '3',
-        title: 'The Adventures of Huckleberry Finn',
-        author: 'Mark Twain',
-      },
-]
+const ADD_BOOK = 'ADD_BOOK';
+const REMOVE_BOOK = 'REMOVE_BOOK';
+const GET_BOOK = 'GET_BOOK';
+const API_URL = 'https://us-central1-bookstore-api-e63c8.cloudfunctions.net/bookstoreApi/apps/OoMg7JW7xItdmWuHqq1t/books/';
 
-const bookReduser = (state = initialBooks, action) => {
-  switch(action.type) {
+const addBook = (id, title, author) => (dispatch) => {
+  axios.post(API_URL, {
+    item_id: id,
+    title,
+    author,
+    category: 'Fiction',
+  }).then(() => {
+    dispatch({
+      type: ADD_BOOK,
+      book: {
+        id,
+        title,
+        author,
+      },
+    });
+  });
+};
+
+const removeBook = (id) => (dispatch) => {
+  const deleteUrl = `${API_URL}${id}`;
+  axios.delete(deleteUrl, {
+    item_id: id,
+  }).then(() => {
+    dispatch({
+      type: REMOVE_BOOK,
+      id,
+    });
+  });
+};
+
+const fetchBooks = () => (dispatch) => {
+  axios.get(API_URL).then((response) => {
+    const books = Object.keys(response.data).map((key) => {
+      const book = response.data[key][0];
+      return {
+        id: key,
+        ...book,
+      };
+    });
+    dispatch({ type: GET_BOOK, payload: books });
+  });
+};
+
+const initialState = [];
+
+const bookReducer = (state = initialState, action) => {
+  switch (action.type) {
     case ADD_BOOK:
-        return [
-            ...state, action.payload,
-        ];
+      return [
+        ...state,
+        {
+          id: action.book.id,
+          title: action.book.title,
+          author: action.book.author,
+        },
+      ];
     case REMOVE_BOOK:
-        return state.filter((book) => book.id !== action.payload);
-    default:
-        return state;  
-  } 
-}
+      return state.filter((book) => book.id !== action.id);
+    case GET_BOOK:
+      return [
+        ...action.payload,
+      ];
+    default: return state;
+  }
+};
 
-const addAction = (newBook) => ({
-  type: ADD_BOOK,
-  payload: newBook
-});
-
-const revAction = (id) => ({
-  type: REMOVE_BOOK,
-  payload: id
-});
-
-export default bookReduser;
-export { addAction, revAction};
+export default bookReducer;
+export { addBook, removeBook, fetchBooks };
